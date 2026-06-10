@@ -1,0 +1,131 @@
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: var(--nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem;
+  background: rgba(251,246,238,0.95);
+  border-bottom: 1px solid rgba(212,160,23,0.2);
+  backdrop-filter: blur(16px);
+}
+
+.logo {
+  font-family: var(--font-display);
+  font-size: 1.6rem; font-weight: 900;
+  color: var(--night); letter-spacing: -0.02em;
+  display: flex; align-items: center; gap: 10px;
+  cursor: pointer; background: none; border: none; padding: 0;
+}
+.logoDot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212,160,23,0.2);
+  animation: pulse-dot 2s infinite;
+  flex-shrink: 0;
+}
+
+.links { display: flex; align-items: center; gap: 2rem; }
+.link {
+  font-size: 0.88rem; font-weight: 500; color: var(--muted);
+  transition: color 0.2s; letter-spacing: 0.02em;
+  position: relative; padding-bottom: 2px;
+  background: none; border: none; cursor: pointer;
+}
+.link::after {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 0; height: 1.5px; background: var(--gold); transition: width 0.25s;
+}
+.link:hover, .link.active { color: var(--night); }
+.link:hover::after, .link.active::after { width: 100%; }
+
+.right { display: flex; align-items: center; gap: 12px; }
+
+/* ── Icon button (cart / guest login) ── */
+.iconBtn {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--sand); border: 1px solid rgba(212,160,23,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; transition: all 0.2s; cursor: pointer; position: relative;
+}
+.iconBtn:hover { background: var(--gold); }
+
+.cartCount {
+  position: absolute; top: -4px; right: -4px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--terra); color: #fff;
+  font-size: 0.65rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── User avatar + dropdown ── */
+.userWrap { position: relative; }
+
+.avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--night); color: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 1rem; font-weight: 900;
+  border: 2px solid var(--gold); cursor: pointer;
+  transition: all 0.2s; flex-shrink: 0;
+}
+.avatar:hover { background: var(--earth); transform: scale(1.05); }
+
+.dropdown {
+  position: absolute; top: calc(100% + 10px); right: 0;
+  background: var(--white); border-radius: 16px;
+  box-shadow: var(--shadow-lg); border: 1px solid rgba(212,160,23,0.15);
+  min-width: 220px; overflow: hidden;
+  animation: fadeUp 0.18s ease both;
+  z-index: 300;
+}
+
+.dropHeader {
+  padding: 14px 16px; background: var(--sand);
+  border-bottom: 1px solid rgba(212,160,23,0.1);
+}
+.dropName  { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: var(--night); }
+.dropEmail { font-size: 0.72rem; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.dropItem {
+  width: 100%; padding: 11px 16px; background: none; border: none;
+  display: flex; align-items: center; gap: 10px; cursor: pointer;
+  font-size: 0.85rem; font-weight: 500; color: var(--night);
+  transition: background 0.15s; text-align: left;
+}
+.dropItem:hover { background: var(--sand); }
+.dropItem.danger { color: var(--terra); }
+.dropItem.danger:hover { background: rgba(192,57,43,0.07); }
+
+.dropDivider { height: 1px; background: rgba(212,160,23,0.1); margin: 4px 0; }
+
+/* ── Search ── */
+.searchWrap { position: relative; }
+
+.searchForm {
+  display: flex; align-items: center; gap: 4px;
+  background: var(--white);
+  border: 1.5px solid rgba(212,160,23,0.4);
+  border-radius: 100px; padding: 4px 8px 4px 14px;
+  animation: fadeUp 0.15s ease both;
+}
+
+.searchInput {
+  border: none; background: transparent; outline: none;
+  font-family: var(--font-body); font-size: 0.85rem; color: var(--night);
+  width: 200px;
+}
+.searchInput::placeholder { color: var(--muted); }
+
+.searchSubmit, .searchClose {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: none; border: none; cursor: pointer;
+  font-size: 14px; display: flex; align-items: center; justify-content: center;
+  color: var(--muted); transition: background 0.15s;
+}
+.searchSubmit:hover { background: var(--gold); }
+.searchClose:hover  { background: var(--sand); }
+
+@media (max-width: 768px) {
+  .nav { padding: 0 1.2rem; }
+  .links { display: none; }
+  .searchInput { width: 120px; }
+}

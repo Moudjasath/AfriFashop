@@ -1,0 +1,6 @@
+# En production les clés JWT sont passées directement via les variables d'env Render
+# (pas de chemin de fichier — la valeur contient le PEM brut)
+lexik_jwt_authentication:
+    secret_key: '%env(JWT_SECRET_KEY)%'
+    public_key: '%env(JWT_PUBLIC_KEY)%'
+    pass_phrase: '%env(JWT_PASSPHRASE)%'
