@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AfriShop — African Wax & Fashion</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================
+   VARIABLES & THEMES
+============================================ */
+:root {
+  --gold:    #D4A017;
+  --terra:   #C0392B;
+  --kente:   #E67E22;
+  --earth:   #6B3A2A;
+  --night:   #1A0A00;
+  --cream:   #FBF6EE;
+  --sand:    #F0E6D3;
+  --muted:   #9C8872;
+  --white:   #FFFFFF;
+  --shadow:  0 4px 24px rgba(26,10,0,0.10);
+  --shadow-lg: 0 12px 48px rgba(26,10,0,0.18);
+  --radius:  14px;
+  --nav-h:   72px;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', sans-serif;
+}
+
+/* ============================================
+   RESET
+============================================ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--night);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+button { cursor: pointer; font-family: var(--font-body); }
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ============================================
+   PATTERN BACKGROUND
+============================================ */
+.kente-pattern {
+  background-image:
+    repeating-linear-gradient(45deg, rgba(212,160,23,0.06) 0px, rgba(212,160,23,0.06) 2px, transparent 2px, transparent 12px),
+    repeating-linear-gradient(-45deg, rgba(192,57,43,0.04) 0px, rgba(192,57,43,0.04) 2px, transparent 2px, transparent 12px);
+}
+
+/* ============================================
+   NAVBAR
+============================================ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: var(--nav-h);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem;
+  background: rgba(251,246,238,0.95);
+  border-bottom: 1px solid rgba(212,160,23,0.2);
+  backdrop-filter: blur(16px);
+}
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.6rem; font-weight: 900;
+  color: var(--night); letter-spacing: -0.02em;
+  display: flex; align-items: center; gap: 10px;
+}
+.nav-logo .logo-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--gold);
+  box-shadow: 0 0 0 3px rgba(212,160,23,0.2);
+  animation: pulse-dot 2s infinite;
+}
+@keyframes pulse-dot { 0%,100%{box-shadow:0 0 0 3px rgba(212,160,23,0.2)} 50%{box-shadow:0 0 0 6px rgba(212,160,23,0.1)} }
+.nav-links { display: flex; align-items: center; gap: 2rem; }
+.nav-link {
+  font-size: 0.88rem; font-weight: 500;
+  color: var(--muted); transition: color 0.2s;
+  letter-spacing: 0.02em; position: relative; padding-bottom: 2px;
+}
+.nav-link::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1.5px; background:var(--gold); transition:width 0.25s; }
+.nav-link:hover, .nav-link.active { color: var(--night); }
+.nav-link:hover::after, .nav-link.active::after { width: 100%; }
+.nav-right { display: flex; align-items: center; gap: 12px; }
+.nav-icon-btn {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--sand); border: 1px solid rgba(212,160,23,0.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; transition: all 0.2s;
+}
+.nav-icon-btn:hover { background: var(--gold); }
+.cart-badge {
+  position: relative;
+}
+.cart-count {
+  position: absolute; top: -4px; right: -4px;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--terra); color: #fff;
+  font-size: 0.65rem; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  display: none;
+}
+.cart-count.visible { display: flex; }
+.btn-primary {
+  background: var(--night); color: var(--cream);
+  border: none; border-radius: 100px;
+  padding: 10px 24px; font-size: 0.85rem; font-weight: 500;
+  transition: all 0.25s; letter-spacing: 0.03em;
+}
+.btn-primary:hover { background: var(--earth); transform: translateY(-1px); box-shadow: var(--shadow); }
+.btn-gold {
+  background: var(--gold); color: var(--night);
+  border: none; border-radius: 100px;
+  padding: 10px 24px; font-size: 0.85rem; font-weight: 700;
+  transition: all 0.25s; letter-spacing: 0.03em;
+}
+.btn-gold:hover { background: #c49012; transform: translateY(-1px); box-shadow: var(--shadow); }
+.btn-outline {
+  background: transparent; color: var(--night);
+  border: 1.5px solid var(--night); border-radius: 100px;
+  padding: 10px 24px; font-size: 0.85rem; font-weight: 500;
+  transition: all 0.25s;
+}
+.btn-outline:hover { background: var(--night); color: var(--cream); }
+
+/* ============================================
+   PAGES
+============================================ */
+.app { padding-top: var(--nav-h); }
+.page { display: none; }
+.page.active { display: block; }
+
+/* ============================================
+   HOME — HERO
+============================================ */
+.hero {
+  min-height: calc(100vh - var(--nav-h));
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; padding: 4rem 3rem;
+  gap: 4rem; max-width: 1400px; margin: 0 auto;
+}
+.hero-left { animation: fadeUp 0.8s ease both; }
+.hero-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(212,160,23,0.1); border: 1px solid rgba(212,160,23,0.3);
+  border-radius: 100px; padding: 6px 16px;
+  font-size: 0.78rem; font-weight: 500; color: var(--earth);
+  margin-bottom: 1.5rem; letter-spacing: 0.06em; text-transform: uppercase;
+}
+.hero-tag::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--gold); }
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6vw, 5.5rem);
+  font-weight: 900; line-height: 1.0;
+  letter-spacing: -0.03em; color: var(--night);
+  margin-bottom: 1.5rem;
+}
+.hero-title .italic { font-style: italic; color: var(--terra); }
+.hero-title .underline-gold {
+  position: relative; display: inline-block;
+}
+.hero-title .underline-gold::after {
+  content: '';
+  position: absolute; bottom: 4px; left: 0; right: 0;
+  height: 6px; background: var(--gold); opacity: 0.4; border-radius: 3px;
+  z-index: -1;
+}
+.hero-desc { font-size: 1rem; color: var(--muted); line-height: 1.8; max-width: 440px; margin-bottom: 2.5rem; }
+.hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 3rem; }
+.hero-stats { display: flex; gap: 2.5rem; }
+.hero-stat .num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 900; color: var(--night); }
+.hero-stat .lbl { font-size: 0.75rem; color: var(--muted); margin-top: 2px; }
+
+.hero-right {
+  position: relative; animation: fadeUp 0.8s ease 0.15s both;
+}
+.hero-img-wrap {
+  border-radius: 40px 40px 120px 40px;
+  overflow: hidden; aspect-ratio: 4/5;
+  background: linear-gradient(135deg, #3D1A0A 0%, #6B3A2A 40%, #C0392B 100%);
+  position: relative;
+  box-shadow: var(--shadow-lg);
+}
+.hero-img-pattern {
+  position: absolute; inset: 0;
+  background-image:
+    repeating-linear-gradient(30deg, rgba(212,160,23,0.15) 0, rgba(212,160,23,0.15) 1px, transparent 1px, transparent 20px),
+    repeating-linear-gradient(150deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 20px);
+}
+.hero-img-text {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: rgba(255,255,255,0.9);
+}
+.hero-img-text .big { font-family: var(--font-display); font-size: 5rem; font-weight: 900; line-height: 1; opacity: 0.3; }
+.hero-img-text .label { font-size: 0.9rem; letter-spacing: 0.2em; text-transform: uppercase; opacity: 0.7; margin-top: 8px; }
+.hero-badge {
+  position: absolute; bottom: 2rem; left: -2rem;
+  background: var(--white); border-radius: 16px;
+  padding: 12px 16px; box-shadow: var(--shadow-lg);
+  display: flex; align-items: center; gap: 10px; min-width: 180px;
+}
+.hero-badge .badge-icon { font-size: 1.8rem; }
+.hero-badge .badge-title { font-size: 0.78rem; font-weight: 700; color: var(--night); }
+.hero-badge .badge-sub { font-size: 0.7rem; color: var(--muted); }
+.hero-badge2 {
+  position: absolute; top: 2rem; right: -1.5rem;
+  background: var(--gold); color: var(--night);
+  border-radius: 100px; padding: 10px 18px;
+  font-size: 0.8rem; font-weight: 700;
+  box-shadow: var(--shadow);
+}
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
+
+/* ============================================
+   SECTION TITLES
+============================================ */
+.section-tag {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 900; letter-spacing: -0.02em;
+  color: var(--night); line-height: 1.1;
+  margin-bottom: 0.8rem;
+}
+.section-desc { font-size: 0.95rem; color: var(--muted); max-width: 480px; line-height: 1.7; }
+
+/* ============================================
+   CATEGORIES STRIP
+============================================ */
+.categories-section { padding: 4rem 3rem; background: var(--night); }
+.categories-inner { max-width: 1200px; margin: 0 auto; }
+.categories-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 2rem; }
+.categories-header .section-tag { color: var(--gold); }
+.categories-header .section-title { color: var(--cream); }
+.categories-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
+.cat-card {
+  border-radius: 20px; padding: 2rem 1.5rem;
+  cursor: pointer; transition: all 0.3s; position: relative; overflow: hidden;
+  border: 1.5px solid transparent;
+}
+.cat-card:hover { transform: translateY(-6px); border-color: var(--gold); }
+.cat-card.c1 { background: linear-gradient(135deg, #3D1A0A, #6B3A2A); }
+.cat-card.c2 { background: linear-gradient(135deg, #1A2A0A, #2D5A1A); }
+.cat-card.c3 { background: linear-gradient(135deg, #0A1A3D, #1A3A6B); }
+.cat-card.c4 { background: linear-gradient(135deg, #3D0A2A, #6B1A4A); }
+.cat-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+.cat-name { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: var(--cream); margin-bottom: 4px; }
+.cat-count { font-size: 0.78rem; color: rgba(255,255,255,0.5); }
+.cat-arrow { position: absolute; bottom: 1.2rem; right: 1.2rem; font-size: 1.2rem; color: var(--gold); opacity: 0; transition: opacity 0.2s; }
+.cat-card:hover .cat-arrow { opacity: 1; }
+
+/* ============================================
+   FEATURED PRODUCTS
+============================================ */
+.featured-section { padding: 5rem 3rem; max-width: 1200px; margin: 0 auto; }
+.section-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 3rem; flex-wrap: wrap; gap: 1rem; }
+.products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px,1fr)); gap: 1.5rem; }
+
+/* PRODUCT CARD */
+.product-card {
+  background: var(--white); border-radius: var(--radius);
+  overflow: hidden; transition: all 0.3s;
+  box-shadow: var(--shadow); cursor: pointer;
+  border: 1px solid rgba(212,160,23,0.1);
+  animation: fadeUp 0.5s ease both;
+}
+.product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: rgba(212,160,23,0.3); }
+.product-img {
+  aspect-ratio: 3/4; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5rem;
+}
+.product-img-bg { position: absolute; inset: 0; transition: transform 0.4s; }
+.product-card:hover .product-img-bg { transform: scale(1.05); }
+.product-img-emoji { position: relative; z-index: 1; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2)); }
+.product-badge-new {
+  position: absolute; top: 12px; left: 12px; z-index: 2;
+  background: var(--terra); color: #fff;
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+  padding: 3px 10px; border-radius: 100px; text-transform: uppercase;
+}
+.product-badge-sale {
+  position: absolute; top: 12px; left: 12px; z-index: 2;
+  background: var(--gold); color: var(--night);
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
+  padding: 3px 10px; border-radius: 100px; text-transform: uppercase;
+}
+.wishlist-btn {
+  position: absolute; top: 12px; right: 12px; z-index: 2;
+  width: 34px; height: 34px; border-radius: 50%;
+  background: rgba(255,255,255,0.9); border: none;
+  font-size: 16px; display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s; opacity: 0;
+}
+.product-card:hover .wishlist-btn { opacity: 1; }
+.wishlist-btn:hover { background: var(--terra); }
+.product-info { padding: 1.2rem; }
+.product-cat { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 4px; }
+.product-name { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--night); margin-bottom: 6px; line-height: 1.3; }
+.product-price-row { display: flex; align-items: center; justify-content: space-between; }
+.product-price { font-size: 1.05rem; font-weight: 700; color: var(--terra); }
+.product-price-old { font-size: 0.82rem; color: var(--muted); text-decoration: line-through; margin-left: 6px; }
+.product-stars { font-size: 0.75rem; color: var(--gold); }
+.add-to-cart-btn {
+  width: 100%; margin-top: 10px; padding: 10px;
+  background: var(--night); color: var(--cream);
+  border: none; border-radius: 10px;
+  font-size: 0.83rem; font-weight: 600;
+  transition: all 0.2s; letter-spacing: 0.03em;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.add-to-cart-btn:hover { background: var(--earth); }
+.add-to-cart-btn.added { background: var(--gold); color: var(--night); }
+
+/* ============================================
+   BANNER
+============================================ */
+.banner-section {
+  margin: 0 3rem 5rem;
+  background: linear-gradient(135deg, var(--night) 0%, var(--earth) 100%);
+  border-radius: 28px; padding: 4rem;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center; gap: 3rem;
+  position: relative; overflow: hidden;
+}
+.banner-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(45deg, rgba(212,160,23,0.07) 0, rgba(212,160,23,0.07) 1px, transparent 1px, transparent 18px);
+}
+.banner-text { position: relative; }
+.banner-text .section-tag { color: var(--gold); }
+.banner-title { font-family: var(--font-display); font-size: 2.2rem; font-weight: 900; color: var(--cream); margin-bottom: 1rem; line-height: 1.2; }
+.banner-desc { color: rgba(251,246,238,0.7); margin-bottom: 1.5rem; font-size: 0.95rem; line-height: 1.7; }
+.banner-right { position: relative; display: flex; justify-content: center; }
+.banner-circle {
+  width: 260px; height: 260px; border-radius: 50%;
+  background: rgba(212,160,23,0.15);
+  border: 2px solid rgba(212,160,23,0.3);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 8rem;
+}
+
+/* ============================================
+   CATALOG PAGE
+============================================ */
+.catalog-page { padding: 2rem 3rem 4rem; max-width: 1200px; margin: 0 auto; }
+.catalog-header { margin-bottom: 2rem; }
+.catalog-controls { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 2rem; }
+.filter-select {
+  padding: 9px 16px; border-radius: 100px;
+  background: var(--white); border: 1.5px solid rgba(212,160,23,0.2);
+  font-family: var(--font-body); font-size: 0.83rem; color: var(--night);
+  cursor: pointer; outline: none; transition: border-color 0.2s;
+  appearance: none; padding-right: 32px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%239C8872' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 12px center;
+}
+.filter-select:focus { border-color: var(--gold); }
+.search-input-wrap { display: flex; align-items: center; gap: 8px; background: var(--white); border: 1.5px solid rgba(212,160,23,0.2); border-radius: 100px; padding: 9px 16px; flex: 1; max-width: 300px; }
+.search-input-wrap input { border: none; background: transparent; font-family: var(--font-body); font-size: 0.83rem; color: var(--night); outline: none; width: 100%; }
+.search-input-wrap input::placeholder { color: var(--muted); }
+.results-count { margin-left: auto; font-size: 0.83rem; color: var(--muted); }
+
+/* Filter pills */
+.filter-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.5rem; }
+.filter-pill {
+  padding: 6px 16px; border-radius: 100px; font-size: 0.78rem; font-weight: 500;
+  border: 1.5px solid rgba(212,160,23,0.2); background: var(--white); color: var(--muted);
+  transition: all 0.2s;
+}
+.filter-pill:hover, .filter-pill.active { background: var(--night); color: var(--cream); border-color: var(--night); }
+
+/* ============================================
+   PRODUCT DETAIL PAGE
+============================================ */
+.detail-page { padding: 2rem 3rem 4rem; max-width: 1100px; margin: 0 auto; }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+.detail-gallery { position: sticky; top: calc(var(--nav-h) + 1rem); }
+.detail-main-img {
+  border-radius: 24px; overflow: hidden;
+  aspect-ratio: 4/5; display: flex; align-items: center; justify-content: center;
+  font-size: 10rem; margin-bottom: 1rem;
+  box-shadow: var(--shadow-lg);
+}
+.detail-thumbs { display: flex; gap: 10px; }
+.detail-thumb {
+  width: 70px; height: 70px; border-radius: 12px; border: 2px solid transparent;
+  display: flex; align-items: center; justify-content: center; font-size: 1.8rem;
+  cursor: pointer; transition: all 0.2s; background: var(--sand);
+}
+.detail-thumb.active, .detail-thumb:hover { border-color: var(--gold); }
+.detail-info {}
+.back-btn { display: flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--muted); margin-bottom: 1.5rem; background: none; border: none; padding: 0; }
+.back-btn:hover { color: var(--night); }
+.detail-cat { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.12em; color: var(--gold); font-weight: 700; margin-bottom: 8px; }
+.detail-title { font-family: var(--font-display); font-size: 2.2rem; font-weight: 900; color: var(--night); margin-bottom: 12px; line-height: 1.2; }
+.detail-stars { display: flex; align-items: center; gap: 8px; margin-bottom: 1.2rem; }
+.detail-stars .stars { color: var(--gold); font-size: 0.9rem; }
+.detail-stars .count { font-size: 0.82rem; color: var(--muted); }
+.detail-price { font-size: 2rem; font-weight: 700; color: var(--terra); margin-bottom: 0.5rem; }
+.detail-price-old { font-size: 1rem; color: var(--muted); text-decoration: line-through; margin-left: 8px; }
+.detail-desc { font-size: 0.92rem; color: var(--muted); line-height: 1.8; margin-bottom: 1.5rem; }
+.detail-label { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--night); margin-bottom: 8px; }
+.color-options { display: flex; gap: 8px; margin-bottom: 1.5rem; }
+.color-swatch {
+  width: 32px; height: 32px; border-radius: 50%; border: 2px solid transparent;
+  cursor: pointer; transition: all 0.2s;
+}
+.color-swatch:hover, .color-swatch.active { border-color: var(--night); transform: scale(1.15); }
+.size-options { display: flex; gap: 8px; margin-bottom: 2rem; flex-wrap: wrap; }
+.size-btn {
+  padding: 8px 16px; border-radius: 8px;
+  background: var(--sand); border: 1.5px solid transparent; color: var(--night);
+  font-size: 0.82rem; font-weight: 600; transition: all 0.2s;
+}
+.size-btn:hover, .size-btn.active { background: var(--night); color: var(--cream); }
+.qty-row { display: flex; align-items: center; gap: 16px; margin-bottom: 1.5rem; }
+.qty-ctrl { display: flex; align-items: center; gap: 0; background: var(--sand); border-radius: 10px; overflow: hidden; }
+.qty-btn { width: 36px; height: 36px; border: none; background: transparent; font-size: 1.2rem; color: var(--night); transition: background 0.15s; }
+.qty-btn:hover { background: rgba(0,0,0,0.08); }
+.qty-val { font-size: 0.95rem; font-weight: 700; color: var(--night); padding: 0 16px; }
+.detail-actions { display: flex; gap: 12px; }
+.btn-cart-main {
+  flex: 1; padding: 14px; background: var(--night); color: var(--cream);
+  border: none; border-radius: 12px; font-size: 0.95rem; font-weight: 700;
+  transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-cart-main:hover { background: var(--earth); transform: translateY(-2px); box-shadow: var(--shadow); }
+.btn-wishlist-main {
+  width: 50px; height: 50px; border-radius: 12px;
+  background: var(--sand); border: none; font-size: 1.3rem;
+  transition: all 0.2s;
+}
+.btn-wishlist-main:hover { background: rgba(192,57,43,0.1); }
+
+/* ============================================
+   CART SIDEBAR
+============================================ */
+.cart-overlay {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(26,10,0,0.5); backdrop-filter: blur(4px);
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.cart-overlay.open { opacity: 1; pointer-events: all; }
+.cart-sidebar {
+  position: fixed; top: 0; right: -420px; bottom: 0; z-index: 301;
+  width: 400px; background: var(--cream);
+  box-shadow: var(--shadow-lg);
+  transition: right 0.35s cubic-bezier(0.4,0,0.2,1);
+  display: flex; flex-direction: column;
+}
+.cart-overlay.open .cart-sidebar { right: 0; }
+.cart-header { padding: 1.5rem; border-bottom: 1px solid rgba(212,160,23,0.15); display: flex; align-items: center; justify-content: space-between; }
+.cart-title { font-family: var(--font-display); font-size: 1.3rem; font-weight: 900; color: var(--night); }
+.cart-close { width: 36px; height: 36px; border-radius: 50%; background: var(--sand); border: none; font-size: 18px; display: flex; align-items: center; justify-content: center; }
+.cart-close:hover { background: var(--gold); }
+.cart-items { flex: 1; overflow-y: auto; padding: 1rem; display: flex; flex-direction: column; gap: 12px; }
+.cart-item { background: var(--white); border-radius: 14px; padding: 14px; display: flex; gap: 12px; box-shadow: var(--shadow); }
+.cart-item-img { width: 70px; height: 70px; border-radius: 10px; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 2rem; flex-shrink: 0; }
+.cart-item-info { flex: 1; }
+.cart-item-name { font-family: var(--font-display); font-size: 0.9rem; font-weight: 700; color: var(--night); margin-bottom: 4px; }
+.cart-item-price { font-size: 0.88rem; font-weight: 600; color: var(--terra); }
+.cart-item-qty { font-size: 0.78rem; color: var(--muted); margin-top: 2px; }
+.cart-remove { background: none; border: none; color: var(--muted); font-size: 18px; padding: 0; transition: color 0.15s; }
+.cart-remove:hover { color: var(--terra); }
+.cart-empty { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--muted); }
+.cart-empty .icon { font-size: 4rem; }
+.cart-footer { padding: 1.5rem; border-top: 1px solid rgba(212,160,23,0.15); }
+.cart-total { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
+.cart-total-label { font-size: 0.9rem; color: var(--muted); }
+.cart-total-val { font-family: var(--font-display); font-size: 1.4rem; font-weight: 900; color: var(--night); }
+.btn-checkout { width: 100%; padding: 14px; background: var(--terra); color: #fff; border: none; border-radius: 12px; font-size: 0.95rem; font-weight: 700; transition: all 0.2s; letter-spacing: 0.03em; }
+.btn-checkout:hover { background: #a93226; transform: translateY(-1px); box-shadow: var(--shadow); }
+
+/* ============================================
+   AUTH MODAL
+============================================ */
+.auth-overlay {
+  position: fixed; inset: 0; z-index: 400;
+  background: rgba(26,10,0,0.6); backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center; padding: 1rem;
+  opacity: 0; pointer-events: none; transition: opacity 0.3s;
+}
+.auth-overlay.open { opacity: 1; pointer-events: all; }
+.auth-modal {
+  background: var(--cream); border-radius: 24px; padding: 2.5rem;
+  width: 100%; max-width: 420px;
+  box-shadow: var(--shadow-lg);
+  transform: translateY(20px) scale(0.97); transition: transform 0.3s;
+}
+.auth-overlay.open .auth-modal { transform: none; }
+.auth-logo { font-family: var(--font-display); font-size: 1.8rem; font-weight: 900; text-align: center; margin-bottom: 0.3rem; }
+.auth-sub { font-size: 0.85rem; color: var(--muted); text-align: center; margin-bottom: 2rem; }
+.auth-tabs { display: flex; background: var(--sand); border-radius: 10px; padding: 4px; margin-bottom: 1.5rem; }
+.auth-tab { flex: 1; padding: 8px; border-radius: 8px; border: none; font-size: 0.85rem; font-weight: 600; background: transparent; color: var(--muted); transition: all 0.2s; }
+.auth-tab.active { background: var(--white); color: var(--night); box-shadow: var(--shadow); }
+.auth-form { display: flex; flex-direction: column; gap: 14px; }
+.auth-field { display: flex; flex-direction: column; gap: 5px; }
+.auth-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); }
+.auth-input { padding: 11px 14px; background: var(--white); border: 1.5px solid rgba(212,160,23,0.2); border-radius: 10px; font-family: var(--font-body); font-size: 0.88rem; color: var(--night); outline: none; transition: border-color 0.2s; }
+.auth-input:focus { border-color: var(--gold); }
+.auth-submit { padding: 13px; background: var(--night); color: var(--cream); border: none; border-radius: 12px; font-size: 0.92rem; font-weight: 700; transition: all 0.2s; margin-top: 4px; }
+.auth-submit:hover { background: var(--earth); }
+.auth-close { position: absolute; top: 1rem; right: 1rem; width: 32px; height: 32px; border-radius: 50%; background: var(--sand); border: none; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+.auth-modal-wrap { position: relative; }
+
+/* ============================================
+   TOAST
+============================================ */
+.toast { position: fixed; bottom: 2rem; right: 2rem; z-index: 500; background: var(--night); color: var(--cream); padding: 12px 20px; border-radius: 100px; font-size: 0.83rem; font-weight: 600; box-shadow: var(--shadow-lg); transform: translateY(80px); opacity: 0; transition: all 0.3s; display: flex; align-items: center; gap: 8px; }
+.toast.show { transform: translateY(0); opacity: 1; }
+
+/* ============================================
+   FOOTER
+============================================ */
+footer { background: var(--night); padding: 4rem 3rem 2rem; }
+.footer-inner { max-width: 1200px; margin: 0 auto; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; margin-bottom: 3rem; }
+.footer-brand .logo { font-family: var(--font-display); font-size: 1.5rem; font-weight: 900; color: var(--cream); margin-bottom: 1rem; }
+.footer-brand p { font-size: 0.85rem; color: rgba(251,246,238,0.5); line-height: 1.7; max-width: 280px; }
+.footer-col h4 { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--gold); margin-bottom: 1rem; }
+.footer-col a { display: block; font-size: 0.83rem; color: rgba(251,246,238,0.5); margin-bottom: 8px; transition: color 0.2s; }
+.footer-col a:hover { color: var(--cream); }
+.footer-bottom { border-top: 1px solid rgba(251,246,238,0.08); padding-top: 1.5rem; display: flex; align-items: center; justify-content: space-between; }
+.footer-bottom p { font-size: 0.78rem; color: rgba(251,246,238,0.3); }
+.footer-socials { display: flex; gap: 12px; }
+.social-btn { width: 36px; height: 36px; border-radius: 50%; background: rgba(251,246,238,0.08); display: flex; align-items: center; justify-content: center; font-size: 16px; transition: background 0.2s; border: none; }
+.social-btn:hover { background: var(--gold); }
+
+/* ============================================
+   RESPONSIVE
+============================================ */
+@media (max-width: 1024px) { .hero { grid-template-columns: 1fr; text-align: center; } .hero-desc { margin: 0 auto 2.5rem; } .hero-ctas, .hero-stats { justify-content: center; } .hero-right { max-width: 380px; margin: 0 auto; } .hero-badge { left: 0; } .footer-grid { grid-template-columns: 1fr 1fr; } .detail-grid { grid-template-columns: 1fr; } .detail-gallery { position: static; } }
+@media (max-width: 768px) { nav { padding: 0 1.2rem; } .nav-links { display: none; } .hero, .catalog-page, .detail-page, .featured-section { padding-left: 1.2rem; padding-right: 1.2rem; } .categories-section, .banner-section { padding: 2.5rem 1.2rem; margin: 0 0 2.5rem; } .categories-grid { grid-template-columns: 1fr 1fr; } .banner-section { grid-template-columns: 1fr; } .banner-right { display: none; } .footer-grid { grid-template-columns: 1fr; } .cart-sidebar { width: 100%; right: -100%; } }
+</style>
+</head>
+<body>
+
+<!-- ============ NAVBAR ============ -->
+<nav>
+  <div class="nav-logo">
+    <div class="logo-dot"></div>
+    AfriShop
+  </div>
+  <div class="nav-links">
+    <a class="nav-link active" onclick="showPage('home')" href="#">Home</a>
+    <a class="nav-link" onclick="showPage('catalog')" href="#">Catalog</a>
+    <a class="nav-link" href="#">Collections</a>
+    <a class="nav-link" href="#">About</a>
+  </div>
+  <div class="nav-right">
+    <button class="nav-icon-btn" onclick="openAuth()">👤</button>
+    <button class="nav-icon-btn cart-badge" onclick="toggleCart()">
+      🛒
+      <span class="cart-count" id="cart-count">0</span>
+    </button>
+    <button class="btn-primary" onclick="showPage('catalog')">Shop Now</button>
+  </div>
+</nav>
+
+<div class="app">
+
+<!-- ============ HOME PAGE ============ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <div class="hero kente-pattern">
+    <div class="hero-left">
+      <div class="hero-tag">✦ New Collection 2025</div>
+      <h1 class="hero-title">
+        Wear the<br>
+        <span class="italic">Soul</span> of<br>
+        <span class="underline-gold">Africa</span>
+      </h1>
+      <p class="hero-desc">Discover authentic African wax prints, hand-crafted garments and contemporary fashion rooted in the rich textile traditions of West Africa.</p>
+      <div class="hero-ctas">
+        <button class="btn-gold" onclick="showPage('catalog')">Explore Collection →</button>
+        <button class="btn-outline">Our Story</button>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num">200+</div><div class="lbl">Unique Designs</div></div>
+        <div class="hero-stat"><div class="num">15</div><div class="lbl">African Countries</div></div>
+        <div class="hero-stat"><div class="num">5k+</div><div class="lbl">Happy Clients</div></div>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-img-wrap">
+        <div class="hero-img-pattern"></div>
+        <div class="hero-img-text">
+          <div class="big">🪭</div>
+          <div class="label">Wax & Fashion</div>
+        </div>
+      </div>
+      <div class="hero-badge">
+        <div class="badge-icon">🌍</div>
+        <div><div class="badge-title">Ethically Sourced</div><div class="badge-sub">From 15 African artisans</div></div>
+      </div>
+      <div class="hero-badge2">✦ Free Shipping over 50€</div>
+    </div>
+  </div>
+
+  <!-- CATEGORIES -->
+  <div class="categories-section">
+    <div class="categories-inner">
+      <div class="categories-header">
+        <div><div class="section-tag">Browse by Category</div><h2 class="section-title" style="color:var(--cream)">Shop by Style</h2></div>
+        <button class="btn-outline" style="color:var(--cream);border-color:rgba(255,255,255,0.3)" onclick="showPage('catalog')">View All →</button>
+      </div>
+      <div class="categories-grid">
+        <div class="cat-card c1" onclick="filterAndGo('Dresses')"><div class="cat-icon">👗</div><div class="cat-name">Dresses</div><div class="cat-count">48 items</div><div class="cat-arrow">→</div></div>
+        <div class="cat-card c2" onclick="filterAndGo('Tops')"><div class="cat-icon">👕</div><div class="cat-name">Tops & Blouses</div><div class="cat-count">36 items</div><div class="cat-arrow">→</div></div>
+        <div class="cat-card c3" onclick="filterAndGo('Accessories')"><div class="cat-icon">👜</div><div class="cat-name">Accessories</div><div class="cat-count">24 items</div><div class="cat-arrow">→</div></div>
+        <div class="cat-card c4" onclick="filterAndGo('Sets')"><div class="cat-icon">🥻</div><div class="cat-name">Sets & Suits</div><div class="cat-count">18 items</div><div class="cat-arrow">→</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURED PRODUCTS -->
+  <div class="featured-section">
+    <div class="section-header">
+      <div><div class="section-tag">Featured Collection</div><h2 class="section-title">Trending Now</h2></div>
+      <button class="btn-outline" onclick="showPage('catalog')">View All Products →</button>
+    </div>
+    <div class="products-grid" id="featured-grid"></div>
+  </div>
+
+  <!-- BANNER -->
+  <div class="banner-section">
+    <div class="banner-text">
+      <div class="section-tag">✦ Special Offer</div>
+      <div class="banner-title">New Season,<br>New Wax Prints</div>
+      <p class="banner-desc">Explore our latest collection of vibrant wax prints and contemporary African fashion. Free shipping on orders above 50€.</p>
+      <button class="btn-gold" onclick="showPage('catalog')">Discover Collection →</button>
+    </div>
+    <div class="banner-right">
+      <div class="banner-circle">🪭</div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">AfriShop</div>
+          <p>Your destination for authentic African wax prints and contemporary African fashion. Ethically sourced from artisans across West Africa.</p>
+        </div>
+        <div class="footer-col"><h4>Shop</h4><a href="#">Dresses</a><a href="#">Tops</a><a href="#">Accessories</a><a href="#">New Arrivals</a></div>
+        <div class="footer-col"><h4>Info</h4><a href="#">About Us</a><a href="#">Shipping</a><a href="#">Returns</a><a href="#">FAQ</a></div>
+        <div class="footer-col"><h4>Contact</h4><a href="#">hello@afrishop.com</a><a href="#">WhatsApp</a><a href="#">Instagram</a><a href="#">Facebook</a></div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 AfriShop · Built by Moudjasath CHAKIBOU</p>
+        <div class="footer-socials">
+          <button class="social-btn">📘</button>
+          <button class="social-btn">📸</button>
+          <button class="social-btn">🐦</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div><!-- /page-home -->
+
+<!-- ============ CATALOG PAGE ============ -->
+<div class="page" id="page-catalog">
+  <div class="catalog-page">
+    <div class="catalog-header">
+      <div class="section-tag">Our Products</div>
+      <h1 class="section-title">Full Catalog</h1>
+    </div>
+    <div class="catalog-controls">
+      <div class="search-input-wrap">
+        <span style="color:var(--muted)">🔍</span>
+        <input type="text" id="catalog-search" placeholder="Search products..." oninput="renderCatalog()">
+      </div>
+      <select class="filter-select" id="cat-filter" onchange="renderCatalog()">
+        <option value="">All Categories</option>
+        <option value="Dresses">Dresses</option>
+        <option value="Tops">Tops</option>
+        <option value="Accessories">Accessories</option>
+        <option value="Sets">Sets</option>
+      </select>
+      <select class="filter-select" id="sort-filter" onchange="renderCatalog()">
+        <option value="default">Sort: Featured</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="name">Name A-Z</option>
+      </select>
+      <span class="results-count" id="results-count">0 products</span>
+    </div>
+    <div class="filter-pills">
+      <button class="filter-pill active" onclick="setPill('',this)">All</button>
+      <button class="filter-pill" onclick="setPill('Dresses',this)">👗 Dresses</button>
+      <button class="filter-pill" onclick="setPill('Tops',this)">👕 Tops</button>
+      <button class="filter-pill" onclick="setPill('Accessories',this)">👜 Accessories</button>
+      <button class="filter-pill" onclick="setPill('Sets',this)">🥻 Sets</button>
+    </div>
+    <div class="products-grid" id="catalog-grid"></div>
+  </div>
+</div>
+
+<!-- ============ PRODUCT DETAIL PAGE ============ -->
+<div class="page" id="page-detail">
+  <div class="detail-page">
+    <div class="detail-grid">
+      <div class="detail-gallery">
+        <div class="detail-main-img" id="detail-main-img"></div>
+        <div class="detail-thumbs" id="detail-thumbs"></div>
+      </div>
+      <div class="detail-info" id="detail-info"></div>
+    </div>
+  </div>
+</div>
+
+</div><!-- .app -->
+
+<!-- ============ CART SIDEBAR ============ -->
+<div class="cart-overlay" id="cart-overlay" onclick="closeCartOutside(event)">
+  <div class="cart-sidebar">
+    <div class="cart-header">
+      <div class="cart-title">Shopping Cart 🛒</div>
+      <button class="cart-close" onclick="toggleCart()">✕</button>
+    </div>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-footer" id="cart-footer"></div>
+  </div>
+</div>
+
+<!-- ============ AUTH MODAL ============ -->
+<div class="auth-overlay" id="auth-overlay" onclick="closeAuthOutside(event)">
+  <div class="auth-modal-wrap">
+    <div class="auth-modal">
+      <button class="auth-close" onclick="closeAuth()" style="position:absolute;top:1rem;right:1rem">✕</button>
+      <div class="auth-logo">AfriShop</div>
+      <p class="auth-sub">Sign in to your account or create a new one</p>
+      <div class="auth-tabs">
+        <button class="auth-tab active" onclick="setAuthTab('login',this)">Sign In</button>
+        <button class="auth-tab" onclick="setAuthTab('register',this)">Register</button>
+      </div>
+      <div id="auth-form-wrap"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ============================================
+// DATA
+// ============================================
+const PRODUCTS = [
+  { id:1, name:'Kente Wrap Dress', cat:'Dresses', price:89, oldPrice:120, emoji:'👗', badge:'New', colors:['#C0392B','#E67E22','#2ECC71'], sizes:['XS','S','M','L','XL'], desc:'A stunning wrap dress featuring traditional Kente-inspired geometric patterns. Hand-crafted with premium wax print fabric from Ghana. Perfect for special occasions or everyday elegance.', rating:4.8, reviews:124 },
+  { id:2, name:'Ankara Blouse Set', cat:'Sets', price:110, oldPrice:145, emoji:'🥻', badge:'Sale', colors:['#8E44AD','#2C3E50','#E74C3C'], sizes:['S','M','L','XL'], desc:'Elegant two-piece set featuring vibrant Ankara print. Includes a tailored blouse and matching wrap skirt. Handmade by artisans in Benin.', rating:4.9, reviews:89 },
+  { id:3, name:'Wax Tote Bag', cat:'Accessories', price:45, emoji:'👜', badge:null, colors:['#F39C12','#16A085','#8E44AD'], sizes:['One Size'], desc:'Spacious tote bag crafted from authentic wax print fabric. Features sturdy handles and an interior pocket. A stylish statement piece for daily use.', rating:4.6, reviews:67 },
+  { id:4, name:'Dashiki Top', cat:'Tops', price:55, oldPrice:70, emoji:'👕', badge:'Sale', colors:['#E74C3C','#F39C12','#27AE60'], sizes:['XS','S','M','L','XL','XXL'], desc:'Classic Dashiki top with modern tailoring. Features the iconic V-neck embroidery and vibrant wax print fabric. Versatile for casual and formal settings.', rating:4.7, reviews:156 },
+  { id:5, name:'Bogolan Skirt', cat:'Dresses', price:72, emoji:'👗', badge:'New', colors:['#795548','#5D4037','#3E2723'], sizes:['XS','S','M','L'], desc:'Traditional Bogolan (mudcloth) inspired skirt with earthy geometric patterns. Each piece is unique with hand-applied motifs representing cultural stories.', rating:4.5, reviews:43 },
+  { id:6, name:'Wax Print Headwrap', cat:'Accessories', price:28, emoji:'🧣', badge:null, colors:['#E91E63','#9C27B0','#FF5722'], sizes:['One Size'], desc:'Elegant headwrap in premium wax print fabric. Versatile styling options — wear as a turban, crown or let it flow. 2.5 meters of luxurious fabric.', rating:4.9, reviews:201 },
+  { id:7, name:'Kaba & Slit Set', cat:'Sets', price:135, oldPrice:180, emoji:'🥻', badge:'Sale', colors:['#1ABC9C','#3498DB','#9B59B6'], sizes:['S','M','L','XL'], desc:'Traditional West African Kaba & Slit suit with contemporary tailoring. Features a fitted bodice blouse and an elegant flowing slit skirt in matching Ankara fabric.', rating:4.8, reviews:77 },
+  { id:8, name:'African Print Maxi', cat:'Dresses', price:95, emoji:'👗', badge:'New', colors:['#FF6B35','#004E89','#1A936F'], sizes:['XS','S','M','L','XL'], desc:'Flowing maxi dress in vibrant African print. Features a V-neckline and side pockets. Perfect for summer events, beach outings or casual dining.', rating:4.6, reviews:92 },
+];
+
+let cart = JSON.parse(localStorage.getItem('afrishop_cart') || '[]');
+let currentPage = 'home';
+let activePill = '';
+let currentProductId = null;
+let selectedSize = '';
+let selectedColor = 0;
+let qty = 1;
+let wishlist = new Set(JSON.parse(localStorage.getItem('afrishop_wish') || '[]'));
+const $ = id => document.getElementById(id);
+
+// ============================================
+// NAVIGATION
+// ============================================
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+  currentPage = name;
+  window.scrollTo(0,0);
+  if (name === 'catalog') renderCatalog();
+}
+
+function filterAndGo(cat) {
+  $('cat-filter').value = cat;
+  activePill = cat;
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.toggle('active', p.textContent.includes(cat)));
+  showPage('catalog');
+}
+
+function setPill(cat, btn) {
+  activePill = cat;
+  document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  $('cat-filter').value = cat;
+  renderCatalog();
+}
+
+// ============================================
+// PRODUCT CARD HTML
+// ============================================
+function productCardHTML(p, forFeatured=false) {
+  const isWished = wishlist.has(p.id);
+  const gradients = {
+    'Dresses': 'linear-gradient(135deg,#3D1A0A,#C0392B)',
+    'Sets':    'linear-gradient(135deg,#1A0A3D,#6B2A9A)',
+    'Tops':    'linear-gradient(135deg,#0A3D1A,#2D8A4A)',
+    'Accessories': 'linear-gradient(135deg,#3D2A0A,#D4A017)'
+  };
+  const bg = gradients[p.cat] || 'linear-gradient(135deg,#3D1A0A,#6B3A2A)';
+  return `
+  <div class="product-card" onclick="openProduct(${p.id})">
+    <div class="product-img">
+      <div class="product-img-bg" style="background:${bg}"></div>
+      ${p.badge === 'New' ? `<div class="product-badge-new">New</div>` : ''}
+      ${p.badge === 'Sale' ? `<div class="product-badge-sale">Sale</div>` : ''}
+      <button class="wishlist-btn" onclick="toggleWish(event,${p.id})">${isWished ? '❤️' : '🤍'}</button>
+      <div class="product-img-emoji">${p.emoji}</div>
+    </div>
+    <div class="product-info">
+      <div class="product-cat">${p.cat}</div>
+      <div class="product-name">${p.name}</div>
+      <div class="product-price-row">
+        <div>
+          <span class="product-price">${p.price}€</span>
+          ${p.oldPrice ? `<span class="product-price-old">${p.oldPrice}€</span>` : ''}
+        </div>
+        <div class="product-stars">${'★'.repeat(Math.round(p.rating))} <span style="color:var(--muted);font-size:0.7rem">(${p.reviews})</span></div>
+      </div>
+      <button class="add-to-cart-btn" onclick="addToCart(event,${p.id})">🛒 Add to Cart</button>
+    </div>
+  </div>`;
+}
+
+// ============================================
+// HOME FEATURED
+// ============================================
+function renderFeatured() {
+  const featured = PRODUCTS.slice(0,4);
+  $('featured-grid').innerHTML = featured.map(p => productCardHTML(p,true)).join('');
+}
+
+// ============================================
+// CATALOG
+// ============================================
+function renderCatalog() {
+  const search = $('catalog-search').value.toLowerCase();
+  const cat = $('cat-filter').value || activePill;
+  const sort = $('sort-filter').value;
+
+  let filtered = PRODUCTS.filter(p => {
+    const mSearch = !search || p.name.toLowerCase().includes(search) || p.cat.toLowerCase().includes(search);
+    const mCat = !cat || p.cat === cat;
+    return mSearch && mCat;
+  });
+
+  if (sort === 'price-asc')  filtered.sort((a,b) => a.price - b.price);
+  if (sort === 'price-desc') filtered.sort((a,b) => b.price - a.price);
+  if (sort === 'name')       filtered.sort((a,b) => a.name.localeCompare(b.name));
+
+  $('catalog-grid').innerHTML = filtered.length
+    ? filtered.map(p => productCardHTML(p)).join('')
+    : `<div style="grid-column:1/-1;text-align:center;padding:4rem;color:var(--muted)"><div style="font-size:3rem;margin-bottom:1rem">🔍</div><div>No products found</div></div>`;
+  $('results-count').textContent = `${filtered.length} product${filtered.length!==1?'s':''}`;
+}
+
+// ============================================
+// PRODUCT DETAIL
+// ============================================
+function openProduct(id) {
+  currentProductId = id;
+  selectedSize = '';
+  selectedColor = 0;
+  qty = 1;
+  const p = PRODUCTS.find(x => x.id === id);
+  const gradients = {
+    'Dresses': 'linear-gradient(135deg,#3D1A0A,#C0392B)',
+    'Sets':    'linear-gradient(135deg,#1A0A3D,#6B2A9A)',
+    'Tops':    'linear-gradient(135deg,#0A3D1A,#2D8A4A)',
+    'Accessories': 'linear-gradient(135deg,#3D2A0A,#D4A017)'
+  };
+  const bg = gradients[p.cat] || 'linear-gradient(135deg,#3D1A0A,#6B3A2A)';
+
+  $('detail-main-img').innerHTML = `<div style="width:100%;height:100%;background:${bg};display:flex;align-items:center;justify-content:center;font-size:9rem">${p.emoji}</div>`;
+
+  $('detail-thumbs').innerHTML = [p.emoji, '🪡', '✂️', '🪭'].map((e,i) =>
+    `<div class="detail-thumb${i===0?' active':''}" onclick="this.parentElement.querySelectorAll('.detail-thumb').forEach(t=>t.classList.remove('active'));this.classList.add('active')" style="font-size:${i===0?'2rem':'1.2rem'}">${e}</div>`
+  ).join('');
+
+  $('detail-info').innerHTML = `
+    <button class="back-btn" onclick="history.back() || showPage('catalog')">← Back</button>
+    <div class="detail-cat">${p.cat}</div>
+    <div class="detail-title">${p.name}</div>
+    <div class="detail-stars"><span class="stars">${'★'.repeat(Math.floor(p.rating))}${'☆'.repeat(5-Math.floor(p.rating))}</span><span class="count">${p.rating} · ${p.reviews} reviews</span></div>
+    <div><span class="detail-price">${p.price}€</span>${p.oldPrice?`<span class="detail-price-old">${p.oldPrice}€</span>`:''}</div>
+    <p class="detail-desc" style="margin-top:12px">${p.desc}</p>
+    <div class="detail-label">Color</div>
+    <div class="color-options" id="color-opts">
+      ${p.colors.map((c,i)=>`<div class="color-swatch${i===0?' active':''}" style="background:${c}" onclick="selectColor(${i},this)"></div>`).join('')}
+    </div>
+    <div class="detail-label">Size</div>
+    <div class="size-options" id="size-opts">
+      ${p.sizes.map(s=>`<button class="size-btn" onclick="selectSize('${s}',this)">${s}</button>`).join('')}
+    </div>
+    <div class="qty-row">
+      <div class="detail-label" style="margin:0">Qty</div>
+      <div class="qty-ctrl">
+        <button class="qty-btn" onclick="changeQty(-1)">−</button>
+        <span class="qty-val" id="qty-val">1</span>
+        <button class="qty-btn" onclick="changeQty(1)">+</button>
+      </div>
+    </div>
+    <div class="detail-actions">
+      <button class="btn-cart-main" onclick="addToCartDetail()">🛒 Add to Cart</button>
+      <button class="btn-wishlist-main" onclick="toggleWishDetail(${p.id})" id="wish-detail">${wishlist.has(p.id)?'❤️':'🤍'}</button>
+    </div>`;
+
+  showPage('detail');
+}
+
+function selectColor(i, el) {
+  selectedColor = i;
+  document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+}
+function selectSize(s, el) {
+  selectedSize = s;
+  document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+}
+function changeQty(d) {
+  qty = Math.max(1, qty + d);
+  $('qty-val').textContent = qty;
+}
+function addToCartDetail() {
+  if (!selectedSize && PRODUCTS.find(p=>p.id===currentProductId)?.sizes.length > 1) {
+    showToast('⚠️ Please select a size'); return;
+  }
+  const p = PRODUCTS.find(x => x.id === currentProductId);
+  for (let i=0; i<qty; i++) addProductToCart(p);
+  showToast(`✓ ${qty}x ${p.name} added to cart`);
+}
+
+// ============================================
+// WISHLIST
+// ============================================
+function toggleWish(e, id) {
+  e.stopPropagation();
+  if (wishlist.has(id)) wishlist.delete(id); else wishlist.add(id);
+  localStorage.setItem('afrishop_wish', JSON.stringify([...wishlist]));
+  e.target.textContent = wishlist.has(id) ? '❤️' : '🤍';
+  showToast(wishlist.has(id) ? '❤️ Added to wishlist' : 'Removed from wishlist');
+}
+function toggleWishDetail(id) {
+  if (wishlist.has(id)) wishlist.delete(id); else wishlist.add(id);
+  localStorage.setItem('afrishop_wish', JSON.stringify([...wishlist]));
+  $('wish-detail').textContent = wishlist.has(id) ? '❤️' : '🤍';
+  showToast(wishlist.has(id) ? '❤️ Added to wishlist' : 'Removed from wishlist');
+}
+
+// ============================================
+// CART
+// ============================================
+function addToCart(e, id) {
+  e.stopPropagation();
+  const p = PRODUCTS.find(x => x.id === id);
+  addProductToCart(p);
+  const btn = e.target;
+  btn.textContent = '✓ Added!';
+  btn.classList.add('added');
+  setTimeout(() => { btn.textContent = '🛒 Add to Cart'; btn.classList.remove('added'); }, 1500);
+  showToast(`✓ ${p.name} added to cart`);
+}
+
+function addProductToCart(p) {
+  const existing = cart.find(i => i.id === p.id);
+  if (existing) existing.qty++;
+  else cart.push({ id: p.id, name: p.name, price: p.price, emoji: p.emoji, qty: 1 });
+  saveCart();
+  renderCart();
+  updateCartCount();
+}
+
+function removeFromCart(id) {
+  cart = cart.filter(i => i.id !== id);
+  saveCart(); renderCart(); updateCartCount();
+}
+
+function saveCart() { localStorage.setItem('afrishop_cart', JSON.stringify(cart)); }
+
+function updateCartCount() {
+  const total = cart.reduce((s,i) => s+i.qty, 0);
+  const el = $('cart-count');
+  el.textContent = total;
+  total > 0 ? el.classList.add('visible') : el.classList.remove('visible');
+}
+
+function renderCart() {
+  const items = $('cart-items');
+  const footer = $('cart-footer');
+  if (!cart.length) {
+    items.innerHTML = `<div class="cart-empty"><div class="icon">🛒</div><div>Your cart is empty</div><button class="btn-primary" onclick="toggleCart();showPage('catalog')" style="margin-top:12px">Start Shopping</button></div>`;
+    footer.innerHTML = '';
+    return;
+  }
+  items.innerHTML = cart.map(i => `
+    <div class="cart-item">
+      <div class="cart-item-img">${i.emoji}</div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${i.name}</div>
+        <div class="cart-item-price">${(i.price * i.qty).toFixed(2)}€</div>
+        <div class="cart-item-qty">Qty: ${i.qty}</div>
+      </div>
+      <button class="cart-remove" onclick="removeFromCart(${i.id})">✕</button>
+    </div>`).join('');
+  const total = cart.reduce((s,i) => s + i.price*i.qty, 0);
+  footer.innerHTML = `
+    <div class="cart-total"><span class="cart-total-label">Total</span><span class="cart-total-val">${total.toFixed(2)}€</span></div>
+    <button class="btn-checkout" onclick="checkout()">Proceed to Checkout →</button>`;
+}
+
+function toggleCart() {
+  $('cart-overlay').classList.toggle('open');
+  renderCart();
+}
+function closeCartOutside(e) { if (e.target.id === 'cart-overlay') toggleCart(); }
+
+function checkout() {
+  showToast('🎉 Order placed! Thank you for shopping with AfriShop');
+  cart = []; saveCart(); updateCartCount(); renderCart();
+  setTimeout(toggleCart, 1500);
+}
+
+// ============================================
+// AUTH
+// ============================================
+function openAuth() { $('auth-overlay').classList.add('open'); renderAuthForm('login'); }
+function closeAuth() { $('auth-overlay').classList.remove('open'); }
+function closeAuthOutside(e) { if (e.target.id === 'auth-overlay') closeAuth(); }
+
+function setAuthTab(tab, btn) {
+  document.querySelectorAll('.auth-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active'); renderAuthForm(tab);
+}
+
+function renderAuthForm(tab) {
+  $('auth-form-wrap').innerHTML = tab === 'login' ? `
+    <div class="auth-form">
+      <div class="auth-field"><label class="auth-label">Email</label><input class="auth-input" type="email" placeholder="your@email.com"></div>
+      <div class="auth-field"><label class="auth-label">Password</label><input class="auth-input" type="password" placeholder="••••••••"></div>
+      <button class="auth-submit" onclick="handleAuth()">Sign In →</button>
+    </div>` : `
+    <div class="auth-form">
+      <div class="auth-field"><label class="auth-label">Full Name</label><input class="auth-input" type="text" placeholder="Your full name"></div>
+      <div class="auth-field"><label class="auth-label">Email</label><input class="auth-input" type="email" placeholder="your@email.com"></div>
+      <div class="auth-field"><label class="auth-label">Password</label><input class="auth-input" type="password" placeholder="Create a password"></div>
+      <button class="auth-submit" onclick="handleAuth()">Create Account →</button>
+    </div>`;
+}
+
+function handleAuth() {
+  closeAuth();
+  showToast('✓ Welcome to AfriShop!');
+}
+
+// ============================================
+// TOAST
+// ============================================
+function showToast(msg) {
+  const t = $('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ============================================
+// INIT
+// ============================================
+renderFeatured();
+renderCatalog();
+updateCartCount();
+</script>
+</body>
+</html>
