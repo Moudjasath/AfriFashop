@@ -1,0 +1,68 @@
+@import './variables.css';
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--night);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+button { cursor: pointer; font-family: var(--font-body); }
+a { text-decoration: none; color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* ── Kente background pattern ── */
+.kente-pattern {
+  background-image:
+    repeating-linear-gradient(45deg,  rgba(212,160,23,0.06) 0px, rgba(212,160,23,0.06) 2px, transparent 2px, transparent 12px),
+    repeating-linear-gradient(-45deg, rgba(192,57,43,0.04)  0px, rgba(192,57,43,0.04)  2px, transparent 2px, transparent 12px);
+}
+
+/* ── Shared button classes ── */
+.btn-primary {
+  background: var(--night); color: var(--cream);
+  border: none; border-radius: 100px;
+  padding: 10px 24px; font-size: 0.85rem; font-weight: 500;
+  transition: all 0.25s; letter-spacing: 0.03em;
+}
+.btn-primary:hover { background: var(--earth); transform: translateY(-1px); box-shadow: var(--shadow); }
+
+.btn-gold {
+  background: var(--gold); color: var(--night);
+  border: none; border-radius: 100px;
+  padding: 10px 24px; font-size: 0.85rem; font-weight: 700;
+  transition: all 0.25s; letter-spacing: 0.03em;
+}
+.btn-gold:hover { background: #c49012; transform: translateY(-1px); box-shadow: var(--shadow); }
+
+.btn-outline {
+  background: transparent; color: var(--night);
+  border: 1.5px solid var(--night); border-radius: 100px;
+  padding: 10px 24px; font-size: 0.85rem; font-weight: 500;
+  transition: all 0.25s;
+}
+.btn-outline:hover { background: var(--night); color: var(--cream); }
+
+/* ── Section labels ── */
+.section-tag {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 0.6rem;
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 900; letter-spacing: -0.02em;
+  color: var(--night); line-height: 1.1; margin-bottom: 0.8rem;
+}
+.section-desc { font-size: 0.95rem; color: var(--muted); max-width: 480px; line-height: 1.7; }
+
+/* ── Animations ── */
+@keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:none; } }
+@keyframes pulse-dot {
+  0%,100% { box-shadow: 0 0 0 3px rgba(212,160,23,0.2); }
+  50%      { box-shadow: 0 0 0 6px rgba(212,160,23,0.1); }
+}

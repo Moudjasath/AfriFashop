@@ -1,0 +1,42 @@
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+
+.base {
+  background: linear-gradient(90deg, var(--sand) 25%, #e8dccf 50%, var(--sand) 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: var(--radius);
+}
+
+/* ── ProductCard skeleton ── */
+.card {
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,.06);
+}
+
+.cardImg {
+  height: 240px;
+  composes: base;
+  border-radius: 0;
+}
+
+.cardBody {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+}
+
+.line {
+  height: 12px;
+  composes: base;
+  border-radius: 6px;
+}
+
+.lineShort  { width: 40%; }
+.lineLong   { width: 90%; }
+.lineMedium { width: 65%; }
+.lineBtn    { height: 38px; margin-top: .4rem; border-radius: var(--radius); composes: base; }

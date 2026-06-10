@@ -1,0 +1,19 @@
+:root {
+  --gold:    #D4A017;
+  --terra:   #C0392B;
+  --kente:   #E67E22;
+  --earth:   #6B3A2A;
+  --night:   #1A0A00;
+  --cream:   #FBF6EE;
+  --sand:    #F0E6D3;
+  --muted:   #9C8872;
+  --white:   #FFFFFF;
+
+  --shadow:    0 4px 24px rgba(26,10,0,0.10);
+  --shadow-lg: 0 12px 48px rgba(26,10,0,0.18);
+  --radius:    14px;
+  --nav-h:     72px;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body:    'DM Sans', sans-serif;
+}

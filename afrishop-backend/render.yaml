@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: afrishop-backend
+    runtime: php
+    plan: free
+    buildCommand: >
+      composer install --no-dev --optimize-autoloader
+      && APP_ENV=prod php bin/console cache:clear
+      && APP_ENV=prod php bin/console cache:warmup
+      && APP_ENV=prod php bin/console doctrine:schema:update --force
+    startCommand: "php -S 0.0.0.0:$PORT public/index.php"
+    envVars:
+      - key: APP_ENV
+        value: prod
+      - key: APP_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        sync: false          # à renseigner manuellement dans Render Dashboard
+      - key: CORS_ALLOW_ORIGIN
+        sync: false          # ex: ^https://afrishop\.vercel\.app$
+      - key: JWT_PASSPHRASE
+        sync: false
+      - key: JWT_SECRET_KEY
+        sync: false          # contenu PEM de config/jwt/private.pem (encodé base64)
+      - key: JWT_PUBLIC_KEY
+        sync: false          # contenu PEM de config/jwt/public.pem  (encodé base64)
