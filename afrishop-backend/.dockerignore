@@ -1,0 +1,8 @@
+.git
+.env.local
+.env.test
+var/cache
+var/log
+vendor
+config/jwt/private.pem
+config/jwt/public.pem
