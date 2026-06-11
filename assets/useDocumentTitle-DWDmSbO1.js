@@ -1,1 +1,0 @@
-import{g as e,h as t}from"./index-BpV0h-Rz.js";var n=e(t(),1),r=`AfriFashop`;function i(e){(0,n.useEffect)(()=>(document.title=e?`${e} — ${r}`:r,()=>{document.title=r}),[e])}export{i as t};
