@@ -1,6 +1,6 @@
-# En production les clés JWT sont passées directement via les variables d'env Render
-# (pas de chemin de fichier — la valeur contient le PEM brut)
+# En production, l'entrypoint Docker décode les env vars base64
+# et écrit les fichiers PEM dans config/jwt/ au démarrage du conteneur
 lexik_jwt_authentication:
-    secret_key: '%env(JWT_SECRET_KEY)%'
-    public_key: '%env(JWT_PUBLIC_KEY)%'
+    secret_key: '%kernel.project_dir%/config/jwt/private.pem'
+    public_key: '%kernel.project_dir%/config/jwt/public.pem'
     pass_phrase: '%env(JWT_PASSPHRASE)%'
